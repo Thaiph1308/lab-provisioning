@@ -1,0 +1,57 @@
+# This file is for configuring the cluster
+# before provisioning the machines.
+# Ref: https://github.com/danhenrydev/k8s-vagrant
+
+cluster:
+  # The name of the cluster will be the virtualbox group
+  # prefix the machine name, the "node name" in Kubernetes, 
+  # and the hostname.
+  name: node
+  # Vagrant setting in seconds, increase on slower machines as provisioning takes longer
+  bootTimeout: 600
+  # Base Box, only tested with 22.04
+  box: ubuntu/jammy64
+
+  # Settings for the Kubernetes Master node
+  master:
+    cores: 3 # CPU Cores for the VM
+    memory: 16048 # Memory in MB for the VM
+  # Settings for the Kubernetes worker nodes
+  worker:
+    count: 2 # Total number of worker nodes provisioned
+    cores: 3  # Number of cores PER NODE
+    memory: 16048 # Amount of memory in MB PER NODE
+
+  # Kubernetes cluster specific settings
+  kubernetes:
+    version: "latest" # Specify a kubernetes version (ex. 1.27.1) or use "latest"
+    calicoVersion: "3.26.1" # Specify a calico version, 'latest' does not work here
+                            # Latest version can be found here: https://github.com/projectcalico/calico/releases
+
+
+  networking:
+    # The first IP address to be used, it will be assigned to the master node.
+    # Each worker will be the address +1
+    startingIP: 172.15.1.10
+    # Specify specific nameservers
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    pod_network: 172.16.1.0/16
+    service_network: 172.17.1.0/18
+
+  software:
+    # Metallb load balancer
+    metallb:
+      # Install metallb
+      install: true
+      # Address range for the LoadBalancer.  Make sure that these
+      # addresses are within the startingIP /24 network
+      ipRange: 172.15.1.200-172.15.1.250
+
+    # Longhorn specific settings
+    longhorn:
+      # Install Longhorn
+      install: true
+      # Expose the frontend via LoadBalancer (requires metallb), also this one is a string...
+      frontend-lb: "true"
