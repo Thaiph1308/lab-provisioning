@@ -32,13 +32,13 @@ cluster:
   networking:
     # The first IP address to be used, it will be assigned to the master node.
     # Each worker will be the address +1
-    startingIP: 172.15.1.10
+    startingIP: 10.1.1.10
     # Specify specific nameservers
     dns:
       - 8.8.8.8
       - 1.1.1.1
-    pod_network: 172.16.1.0/16
-    service_network: 172.17.1.0/18
+    pod_network: 10.2.1.0/16
+    service_network: 10.3.1.0/18
 
   software:
     # Metallb load balancer
@@ -47,7 +47,7 @@ cluster:
       install: true
       # Address range for the LoadBalancer.  Make sure that these
       # addresses are within the startingIP /24 network
-      ipRange: 172.15.1.200-172.15.1.250
+      ipRange: 10.1.1.200-10.1.1.250
 
     # Longhorn specific settings
     longhorn:
