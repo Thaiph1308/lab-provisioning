@@ -12,7 +12,9 @@ network_ip = octets[3]
 Vagrant.configure("2") do |config|
 
   config.vm.boot_timeout = s["cluster"]["bootTimeout"]
-
+  # config.vm.synced_folder "./data/master", "/data"
+  # config.ssh.username='vagrant'
+  # config.ssh.password='vagrant'
   # Define the master node
   config.vm.define "master" do |master|
     master.vm.box = s["cluster"]["box"]
@@ -49,6 +51,9 @@ Vagrant.configure("2") do |config|
 
   # Define worker nodes
   s["cluster"]["worker"]["count"].times do |i|
+    # config.vm.synced_folder sprintf("./data/worker-%02d", i + 1), "/data"
+    # config.ssh.username='vagrant'
+    # config.ssh.password='vagrant'
     config.vm.define sprintf("worker-%02d", i + 1) do |worker|
       worker.vm.box = s["cluster"]["box"]
       worker.vm.hostname = s["cluster"]["name"] + "-" + sprintf("worker-%02d", i + 1)

@@ -59,7 +59,7 @@ while true; do
     fi
 done
 
-kubectl delete service longhorn-frontend -n longhorn-system
+# kubectl delete service longhorn-frontend -n longhorn-system
 
 
 
