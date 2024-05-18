@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: python-minio-app-pod-2
+  namespace: minio-operator
+  labels:
+    app: python-minio-app-2
+spec:
+  containers:
+  - name: python-minio-app-container
+    image: python:3.8
+    command: ["/bin/sh", "-c"]
+    args:
+      - |
+        pip install minio
+        python -c "$(cat <<'EOT'
+        from minio import Minio
+        from io import BytesIO
+
+        minio_endpoint = 'minio:80'
+        access_key = '1G3slxWLcWfey0z1uhaM'
+        secret_key = '5jlpgY7wz2PrnCS1U24ruzJTJqyQphieA2gl3gcb'
+        bucket_name = 'thai-bucket'
+        object_name = 'test-2-object'
+        data = 'Hello, MinIO!-2'
+
+        data_bytes = data.encode('utf-8')
+        data_length = len(data_bytes)
+        print(f'Sending to {minio_endpoint}: ')
+        client = Minio(minio_endpoint, access_key=access_key, secret_key=secret_key, secure=False)
+        data_bytes_io = BytesIO(data_bytes)
+        client.put_object(bucket_name, object_name, data_bytes_io, data_length)
+        print(f'Message {data} successfully pushed to MinIO.')
+        EOT
+        )"

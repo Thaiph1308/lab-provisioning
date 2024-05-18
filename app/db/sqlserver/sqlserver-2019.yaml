@@ -4,13 +4,13 @@ metadata:
   name: mssql
 type: Opaque
 data:
-  MSSQL_SA_PASSWORD: SG9uZ3RoYWkxMjM=  # base64-encoded password ~ Hongthai123
+  MSSQL_SA_PASSWORD: SG9uZ3RoYWkxMjM=  # base64-encoded password ~ Hongthai123 | username = sa
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
  name: mssql # name of the StatefulSet workload, the SQL Server instance name is derived from this. We suggest to keep this name same as the .spec.template.metadata.labels, .spec.selector.matchLabels and .spec.serviceName to avoid confusion.
- namespace: database
+ namespace: db
 spec:
  serviceName: "mssql" # serviceName is the name of the service that governs this StatefulSet. This service must exist before the StatefulSet, and is responsible for the network identity of the set.
  replicas: 1 # only one pod, with one SQL Server instance deployed.
@@ -63,7 +63,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: sqlserver-2019-service
-  namespace: database
+  namespace: db
 spec:
   selector:
     app: mssql

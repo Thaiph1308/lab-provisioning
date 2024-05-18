@@ -1,0 +1,31 @@
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: oracle-db
+#   namespace: db
+#   labels:
+#     app: oracle-db
+# spec:
+#   replicas: 1
+#   selector:
+#     matchLabels:
+#       app: oracle-db
+#   template:
+#     metadata:
+#       labels:
+#         app: oracle-db
+#     spec:
+#       containers:
+#       - name: oracle-db
+#         image: oracle/database:19.3.0-ee
+#         ports:
+#         - containerPort: 1521
+#         env:
+#         - name: ORACLE_PWD
+#           value: Hongthai123
+#         - name: ORACLE_CHARACTERSET
+#           value: AL32UTF8
+#         - name: ORACLE_SID
+#           value: ORCLCDB
+#         - name: ORACLE_HOME
+#           value: /opt/oracle/product/19c/dbhome_1

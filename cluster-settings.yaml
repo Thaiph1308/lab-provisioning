@@ -14,12 +14,12 @@ cluster:
 
   # Settings for the Kubernetes Master node
   master:
-    cores: 3 # CPU Cores for the VM
-    memory: 16048 # Memory in MB for the VM
+    cores: 1 # CPU Cores for the VM
+    memory: 4096 # Memory in MB for the VM
   # Settings for the Kubernetes worker nodes
   worker:
-    count: 2 # Total number of worker nodes provisioned
-    cores: 3  # Number of cores PER NODE
+    count: 3 # Total number of worker nodes provisioned
+    cores: 1  # Number of cores PER NODE
     memory: 16048 # Amount of memory in MB PER NODE
 
   # Kubernetes cluster specific settings
@@ -32,7 +32,7 @@ cluster:
   networking:
     # The first IP address to be used, it will be assigned to the master node.
     # Each worker will be the address +1
-    startingIP: 10.1.1.10
+    startingIP: 10.10.1.10
     # Specify specific nameservers
     dns:
       - 8.8.8.8
@@ -47,7 +47,7 @@ cluster:
       install: true
       # Address range for the LoadBalancer.  Make sure that these
       # addresses are within the startingIP /24 network
-      ipRange: 10.1.1.200-10.1.1.250
+      ipRange: 10.10.1.200-10.10.1.250
 
     # Longhorn specific settings
     longhorn:
